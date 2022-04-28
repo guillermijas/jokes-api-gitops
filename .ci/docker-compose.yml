@@ -3,7 +3,7 @@ services:
   api:
     container_name: jokes-api-gitops
     build:
-      context: .
+      context: ..
       args:
         HOST_UID: ${HOST_UID:-1000}
         HOST_GID: ${HOST_GID:-1000}
