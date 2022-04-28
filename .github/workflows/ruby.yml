@@ -41,4 +41,4 @@ jobs:
         push: true
         tags: |
           ${{ secrets.REGISTRY_USER }}/${{ github.event.repository.name }}:latest
-          ${{ secrets.REGISTRY_USER }}/${{ github.event.repository.name }}:develop-${{ github.run_number }}
+          ${{ secrets.REGISTRY_USER }}/${{ github.event.repository.name }}:${{ github.ref_name }}-${{ github.run_number }}
