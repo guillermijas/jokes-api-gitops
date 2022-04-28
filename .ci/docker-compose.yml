@@ -1,0 +1,16 @@
+version: "3.8"
+services:
+  api:
+    container_name: jokes-api-gitops
+    build:
+      context: .
+      args:
+        HOST_UID: ${HOST_UID:-1000}
+        HOST_GID: ${HOST_GID:-1000}
+    stdin_open: true
+    tty: true
+    command: sh -c "bundle exec rspec test/app_test.rb"
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"

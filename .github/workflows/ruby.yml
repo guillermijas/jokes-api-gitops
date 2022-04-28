@@ -12,15 +12,15 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        ruby-version: ['3.1.0']
+    env:
+      COMPOSE_FILE: .ci/docker-compose.yml
+
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: ${{ matrix.ruby-version }}
-        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Build docker images
+      run: docker-compose build
+
     - name: Run tests
-      run: bundle exec rspec test/app_test.rb
+      run:  docker-compose run test
