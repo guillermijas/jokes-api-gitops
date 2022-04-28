@@ -2,9 +2,9 @@ name: Ruby
 
 on:
   push:
-    branches: [ master, develop ]
+    branches: [ develop ]
   pull_request:
-    branches: [ master, develop ]
+    branches: [ develop ]
 
 permissions:
   contents: read
@@ -40,7 +40,7 @@ jobs:
         context: .
         push: true
         tags: |
-          ${{ secrets.REGISTRY_USER }}/${{ github.event.repository.name }}:latest
-          ${{ secrets.REGISTRY_USER }}/${{ github.event.repository.name }}:${{ github.ref_name }}-${{ github.run_number }}
-        cache-from: type=registry,ref=${{ secrets.REGISTRY_USER }}/${{ github.event.repository.name }}:latest
+          ${{ secrets.REGISTRY_USER }}/${{ github.event.repository.name }}:staging
+          ${{ secrets.REGISTRY_USER }}/${{ github.event.repository.name }}:staging-${{ github.run_number }}
+        cache-from: type=registry,ref=${{ secrets.REGISTRY_USER }}/${{ github.event.repository.name }}:staging
         cache-to: type=inline
