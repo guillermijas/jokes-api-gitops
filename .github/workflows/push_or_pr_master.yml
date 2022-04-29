@@ -47,7 +47,7 @@ jobs:
 
   release:
     runs-on: ubuntu-latest
-    depends-on: test
+    needs: test
     steps:
       - name: Add ENV variables
         run: |

@@ -46,7 +46,7 @@ jobs:
         cache-to: type=inline
 
   release:
-    depends-on: test
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Add ENV variables
