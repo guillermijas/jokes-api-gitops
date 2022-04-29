@@ -41,7 +41,7 @@ jobs:
         push: true
         tags: |
           ${{ secrets.REGISTRY_USER }}/${{ github.event.repository.name }}:staging
-          ${{ secrets.REGISTRY_USER }}/${{ github.eve2.repository.name }}:develop-${{ github.run_number }}
+          ${{ secrets.REGISTRY_USER }}/${{ github.event.repository.name }}:develop-${{ github.run_number }}
         cache-from: type=registry,ref=${{ secrets.REGISTRY_USER }}/${{ github.event.repository.name }}:staging
         cache-to: type=inline
 
