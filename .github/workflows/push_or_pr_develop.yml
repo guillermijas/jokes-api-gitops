@@ -51,9 +51,9 @@ jobs:
     steps:
       - name: Add ENV variables
         run: |
-          echo "TAG_NAME=`echo staging-${{ github.run_number }}`" >> $GITHUB_ENV
+          echo "TAG_NAME=`echo develop-${{ github.run_number }}`" >> $GITHUB_ENV
           echo "APP_REPO=`echo ${{ github.event.repository.name }}`" >> $GITHUB_ENV
-          echo "IMAGE_NAME=`echo ${{ secrets.REGISTRY_USER }}/${{ github.event.repository.name }}:staging-${{ github.run_number }}`" >> $GITHUB_ENV
+          echo "IMAGE_NAME=`echo ${{ secrets.REGISTRY_USER }}/${{ github.event.repository.name }}:develop-${{ github.run_number }}`" >> $GITHUB_ENV
           echo "ENV_REPO=`echo ${{ github.event.repository.owner.name }}/jokes-api-gitops-environment`" >> $GITHUB_ENV
       - name: Open PR in Environment repo
         run: |
