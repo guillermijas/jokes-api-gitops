@@ -2,8 +2,6 @@ name: New release
 on:
   push:
     branches: [ workflows ]
-
-
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -21,5 +19,4 @@ jobs:
             -H "Accept: application/vnd.github.v3+json" \
             -H "authorization: Bearer ${{ secrets.PERSONAL_TOKEN }}" \
             "https://api.github.com/repos/repos/${{ env.ENV_REPO }}/actions/workflows/new_version/dispatches" \
-            -d '{"event_type":"'"update-version-${{ env.APP_REPO }}"'", "client_payload": { "tag_name": "'"${{ env.TAG_NAME }}"'", "app_repo": "'"${{ env.APP_REPO }}"'", "image": "'"${{ env.IMAGE_NAME }}"'" }}'
-
+            -d '{"ref":"refs/heads/master", "inputs": { "tag_name": "'"${{ env.TAG_NAME }}"'", "app_repo": "'"${{ env.APP_REPO }}"'", "image": "'"${{ env.IMAGE_NAME }}"'"}}'
