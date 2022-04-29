@@ -40,7 +40,26 @@ jobs:
         context: .
         push: true
         tags: |
-          ${{ secrets.REGISTRY_USER }}/${{ github.event.repository.name }}:dev
-          ${{ secrets.REGISTRY_USER }}/${{ github.event.repository.name }}:dev-${{ github.run_number }}
-        cache-from: type=registry,ref=${{ secrets.REGISTRY_USER }}/${{ github.event.repository.name }}:dev
+          ${{ secrets.REGISTRY_USER }}/${{ github.event.repository.name }}:staging
+          ${{ secrets.REGISTRY_USER }}/${{ github.eve2.repository.name }}:develop-${{ github.run_number }}
+        cache-from: type=registry,ref=${{ secrets.REGISTRY_USER }}/${{ github.event.repository.name }}:staging
         cache-to: type=inline
+
+  release:
+    depends-on: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add ENV variables
+        run: |
+          echo "TAG_NAME=`echo staging-${{ github.run_number }}`" >> $GITHUB_ENV
+          echo "APP_REPO=`echo ${{ github.event.repository.name }}`" >> $GITHUB_ENV
+          echo "IMAGE_NAME=`echo ${{ secrets.REGISTRY_USER }}/${{ github.event.repository.name }}:staging-${{ github.run_number }}`" >> $GITHUB_ENV
+          echo "ENV_REPO=`echo ${{ github.event.repository.owner.name }}/jokes-api-gitops-environment`" >> $GITHUB_ENV
+      - name: Open PR in Environment repo
+        run: |
+          curl \
+            -X POST \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "authorization: Bearer ${{ secrets.PERSONAL_TOKEN }}" \
+            "https://api.github.com/repos/${{ env.ENV_REPO }}/actions/workflows/new_version.yml/dispatches" \
+            -d '{"ref":"refs/heads/master", "inputs": { "tag_name": "'"${{ env.TAG_NAME }}"'", "app_repo": "'"${{ env.APP_REPO }}"'", "image": "'"${{ env.IMAGE_NAME }}"'", "environment": "staging" }}'
