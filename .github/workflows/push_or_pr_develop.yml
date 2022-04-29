@@ -1,4 +1,4 @@
-name: Ruby
+name: Push or PR develop
 
 on:
   push:
