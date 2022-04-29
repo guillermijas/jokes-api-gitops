@@ -5,30 +5,8 @@ on:
       - v*
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - name: "Checkout code"
-      uses: actions/checkout@v3
-    - name: Login to DockerHub
-      uses: docker/login-action@v1 
-      with:
-        username: ${{ secrets.REGISTRY_USER }}
-        password: ${{ secrets.REGISTRY_TOKEN }}
-    - name: Build and push
-      uses: docker/build-push-action@v2
-      with:
-        context: .
-        push: true
-        tags: |
-          ${{ secrets.REGISTRY_USER }}/${{ github.event.repository.name }}:latest
-          ${{ secrets.REGISTRY_USER }}/${{ github.event.repository.name }}:release-${{ github.run_number }}
-        cache-from: type=registry,ref=${{ secrets.REGISTRY_USER }}/${{ github.event.repository.name }}:latest
-        cache-to: type=inline
-
   release:
     runs-on: ubuntu-latest
-    needs: build
     steps:
       - name: Add ENV variables
         run: |
