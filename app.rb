@@ -18,7 +18,7 @@ class App < Roda
       http = HTTP.get("http://api.icndb.com/jokes/random")
       joke = JSON.parse(http.body.to_s)["value"]["joke"]
       
-      "Here's a random joke: #{joke}"
+      "Here's a joke: #{joke}"
     end
   end
 end
