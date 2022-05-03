@@ -8,6 +8,11 @@ class App < Roda
       r.redirect "/docs"
     end
 
+    # /health
+    r.get "health" do
+      "ok"
+    end
+
     # /docs
     r.get "docs" do
       "Use /joke to get a random joke."
